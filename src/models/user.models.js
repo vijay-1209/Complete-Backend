@@ -17,7 +17,7 @@ const userSchema = new Schema(
         },
         password:{
             type: String, // encrypted
-            required: true
+            required: [true, "Password is required"]
         },
         avatar:{
             type: String, // cloudinary url 
@@ -25,7 +25,6 @@ const userSchema = new Schema(
         },
         coverImage:{
             type: String, // cloudinary url
-            required: true
         },
         fullName:{
             type: String,
@@ -47,7 +46,7 @@ userSchema.pre("save", async function (next){
     //check if password is change then only encrypt the password
     if(!this.isModified("password")) return next()
 
-    this.password = bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
@@ -80,4 +79,4 @@ userSchema.methods.generateRefreshToken = function(){
 )}
 
 
-export const user = mongoose.model("User", userSchema)
+export const User = mongoose.model("User", userSchema)
