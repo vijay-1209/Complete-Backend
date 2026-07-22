@@ -198,11 +198,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", newRefreshToken, options)
     .json(
-        200,
-        {
-            accessToken, refreshToken: newRefreshToken
-        },
-        "Access Token refreshed"
+        new ApiResponse(200, {accessToken, refreshToken: newRefreshToken}, "Access token refreshed successfully")  
     )
 })
 
@@ -222,13 +218,17 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
     return res
     .status(200)
-    .json(200,"Password changed successfully")
+    .json(
+        new ApiResponse(200, {}, "Password changed successfully")
+    )
 })
 
 const getCurrentUser = asyncHandler(async(req, res) => {
     return res
     .status(200)
-    .json(200, req.user, "Current User fetched successfully")
+    .json(
+        new ApiResponse(200, req.user, "Current user fetched successfully")
+    )
 })
 
 const updateAccountDetails = asyncHandler(async(req, res) => {
@@ -250,7 +250,9 @@ const updateAccountDetails = asyncHandler(async(req, res) => {
     ).select("-password")
     return res
     .status(200)
-    .json(200, user, "User details updated successfully")
+    .json(
+        new ApiResponse(200, user, "Account details updated successfully")
+    )
 })
 
 const updateUserAvatar = asyncHandler(async(req, res) => {
@@ -276,7 +278,9 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
 
     return res
     .status(200)
-    .json(200, user, "user avatar updated successfully")
+    .json(
+        new ApiResponse(200, user, "User avatar updated successfully")
+    )
 })
 
 const updateUserCoverImage = asyncHandler(async(req,res) => {
@@ -302,7 +306,9 @@ const updateUserCoverImage = asyncHandler(async(req,res) => {
 
     return res
     .status(200)
-    .json(200, user, "user cover image updated successfully")
+    .json(
+        new ApiResponse(200, user, "User cover image updated successfully")
+    )
 })
 
 const getUserChannelProfile = asyncHandler(async(req, res) => {
